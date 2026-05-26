@@ -1,0 +1,21 @@
+@startuml UserUseCaseDiagram
+
+left to right direction
+
+actor "משתמש רגיל (User)" as User
+
+rectangle "מערכת ניתוב משלוחים" {
+    usecase "יצירת הזמנות משלוח" as UC_CreateOrders
+    usecase "צפייה בהזמנות האישיות" as UC_ViewMyOrders
+    usecase "התחברות למערכת (Login)" as UC_Login
+}
+
+' אילוץ התחברות
+UC_CreateOrders ..> UC_Login : <<include>>
+UC_ViewMyOrders ..> UC_Login : <<include>>
+
+' קשרים לשחקן
+User --> UC_CreateOrders
+User --> UC_ViewMyOrders
+
+@endum

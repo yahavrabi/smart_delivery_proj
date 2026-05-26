@@ -1,0 +1,10 @@
+@startuml
+class LoginView {
+    - TextField usernameField
+    - PasswordField passwordField
+    - Button loginButton
+    - UserService userService
+    + LoginView(UserService userService)
+    - void handleLogin()
+}
+@enduml

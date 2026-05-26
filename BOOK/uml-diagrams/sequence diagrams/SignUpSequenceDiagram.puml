@@ -1,0 +1,35 @@
+@startuml SignUpSequenceDiagram
+
+actor "אורח (Guest)" as Guest
+participant "מסך הרשמה (UI)" as FE
+participant "שרת המערכת (Backend)" as BE
+database "מסד נתונים" as DB
+
+== שלב 1: הזנת פרטים ושליחת בקשה ==
+Guest -> FE: הזנת שם משתמש, סיסמה ופרטי קשר
+activate FE
+
+FE -> BE: בקשת הרשמה חדשה (HTTP POST)
+activate BE
+
+== שלב 2: אימות ושמירה במערכת ==
+BE -> DB: בדיקה האם שם המשתמש כבר קיים
+activate DB
+DB --> BE: שם המשתמש פנוי
+deactivate DB
+
+BE -> BE: שמירת פרטי המשתמש
+
+BE -> DB: שמירת האובייקט באוסף המשתמשים
+activate DB
+DB --> BE: אישור שמירה מוצלחת
+deactivate DB
+
+== שלב 3: החזרת תשובה והפנייה ==
+BE --> FE: החזרת סטטוס הצלחה (JSON)
+deactivate BE
+
+FE --> Guest: הצגת הודעה "נרשמת בהצלחה!" והפנייה למסך התחברות
+deactivate FE
+
+@enduml

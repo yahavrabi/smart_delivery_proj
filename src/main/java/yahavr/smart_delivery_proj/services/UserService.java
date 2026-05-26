@@ -1,50 +1,49 @@
 package yahavr.smart_delivery_proj.services;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import yahavr.smart_delivery_proj.datamodels.User;
 import yahavr.smart_delivery_proj.repositories.UserRepository;
+import java.util.List;
 
 @Service
 public class UserService {
+
+    @Autowired
     private UserRepository userRepo;
+    private OrderService orderService;
 
-    /**
-     * 
-     * @param userRepo (Dependancy Injection) UserRepository הזרקת תלות ב
-     */
-    public UserService(UserRepository userRepo) {
-        this.userRepo = userRepo;
-    }
-
-    /**
-     * 
-     * @param user
-     * @throws Exception - אם כבר קיים משתמש זרוק שגיאה
-     */
+    // הרשמה
     public void insertUser(User user) throws Exception {
-        //
-        if (userRepo.existsById(user.getUsername())) {
-            throw new Exception("user already exists");
+        if (userRepo.existsByUsernameIgnoreCase(user.getUsername())) {
+            throw new Exception("שם המשתמש כבר קיים במערכת");
         }
         userRepo.insert(user);
     }
 
-    // In UserService.java
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    // התחברות
+    public User authenticate(String username, String password) throws Exception {
+        User user = userRepo.findByUsername(username);
+        if (user == null || !user.getPassword().equals(password)) {
+            throw new Exception("שם משתמש או סיסמה שגויים");
+        }
+        return user;
     }
 
+    // חיפוש עבור דף הרשימה
     public List<User> searchUsers(String query) {
-        // If the search query is empty or null, return all users
-        if (query == null || query.trim().isEmpty()) {
+        if (query == null || query.isEmpty()) {
             return userRepo.findAll();
         }
-
-        // Otherwise, search for users whose names match the query
         return userRepo.findByUsernameContainingIgnoreCase(query);
     }
 
+    // בתוך UserService.java
+    public void deleteUserAndData(String userId) {
+        // 1. קודם כל מוחקים את כל ההזמנות ששייכות למשתמש
+        orderService.deleteOrdersByUserId(userId);
+
+        // 2. עכשיו אפשר למחוק את המשתמש עצמו בבטחה
+        userRepo.deleteById(userId);
+    }
 }

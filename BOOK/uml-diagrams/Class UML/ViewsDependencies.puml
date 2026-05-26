@@ -1,0 +1,138 @@
+@startuml ViewsDependencies
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 8
+skinparam shadowlighting false
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 50
+
+' מאלץ פריסה היררכית ברורה מלמעלה למטה
+top to bottom direction
+
+' --- הגדרות עיצוב ותמות לשכבות השונות ---
+skinparam class<<Vaadin>> {
+    BackgroundColor #ECEFF1
+    BorderColor #90A4AE
+    FontStyle italic
+}
+skinparam class<<Layout>> {
+    BackgroundColor #FFF9C4
+    BorderColor #FBC02D
+    FontStyle bold
+}
+skinparam class<<View>> {
+    BackgroundColor #E3F2FD
+    BorderColor #2196F3
+}
+skinparam class<<Component>> {
+    BackgroundColor #F3E5F5
+    BorderColor #8E24AA
+}
+skinparam class<<Service>> {
+    BackgroundColor #E8F5E9
+    BorderColor #4CAF50
+}
+
+' --- רכיבי תשתית מובנים של Vaadin ---
+class VerticalLayout <<Vaadin>>
+class AppLayout <<Vaadin>>
+
+' --- שכבת ה-Layouts (מעטפות ניווט ומבנה) ---
+package "Vaadin UI: מעטפות מבנה (Layouts)" {
+    class MainLayout <<Layout>> extends AppLayout
+    class GuestLayout <<Layout>> extends AppLayout
+}
+
+' --- שכבת ה-Views (מסכי המערכת) ---
+package "Vaadin UI: דפי המערכת (Views)" {
+    ' מסכים תחת GuestLayout
+    class HomeView <<View>> extends VerticalLayout
+    class LoginView <<View>> extends VerticalLayout
+    class RegisterView <<View>> extends VerticalLayout
+
+    ' מסכים תחת MainLayout (ממשק משתמש/לקוח)
+    class UserDashboardView <<View>> extends VerticalLayout
+    class CreateOrderView <<View>> extends VerticalLayout
+    class MyOrdersView <<View>> extends VerticalLayout
+
+    ' מסכים תחת MainLayout (ממשק מנהל מערכת/Admin)
+    class AdminDashboardView <<View>> extends VerticalLayout
+    class UserDetailsView <<View>> extends VerticalLayout
+    class AdminManagementView <<View>> extends VerticalLayout
+    class AlgorithmRunnerView <<View>> extends VerticalLayout
+    class SavedRoutesView <<View>> extends VerticalLayout
+}
+
+' --- שכבת רכיבים מיוחדים (Custom Components) ---
+package "Vaadin UI: רכיבים משובצים (Components)" {
+    class GoogleMapComponent <<Component>>
+    class VehicleCardComponent <<Component>>
+    class ThemeToggleButton <<Component>>
+}
+
+' --- שכבת השירותים (הזרקות לוגיקה עסקית) ---
+package "Core Business Services" {
+    class UserService <<Service>>
+    class AdminService <<Service>>
+    class OrderService <<Service>>
+    class VehicleService <<Service>>
+    class WarehouseService <<Service>>
+    class DistanceMatrixService <<Service>>
+    class GeneticRoutingService <<Service>>
+    class RouteHistoryService <<Service>>
+}
+
+' ========================================================
+' הגדרת קשרי השיוך, ההכלה והניווט (Structural Connections)
+' ========================================================
+
+' שיוך מסכים למעטפות ה-Layout המתאימות להם
+GuestLayout "1" *-- "many" HomeView : "עוטף"
+GuestLayout "1" *-- "many" LoginView : "עוטף"
+GuestLayout "1" *-- "many" RegisterView : "עוטף"
+
+MainLayout "1" *-- "many" UserDashboardView : "עוטף"
+MainLayout "1" *-- "many" CreateOrderView : "עוטף"
+MainLayout "1" *-- "many" MyOrdersView : "עוטף"
+MainLayout "1" *-- "many" AdminDashboardView : "עוטף"
+MainLayout "1" *-- "many" UserDetailsView : "עוטף"
+MainLayout "1" *-- "many" AdminManagementView : "עוטף"
+MainLayout "1" *-- "many" AlgorithmRunnerView : "עוטף"
+MainLayout "1" *-- "many" SavedRoutesView : "עוטף"
+
+' הכלה ושימוש ברכיבים מיוחדים בתוך ה-UI
+MainLayout "1" *-- "1" ThemeToggleButton : "מכיל"
+CreateOrderView "1" *-- "1" GoogleMapComponent : "משבץ"
+AdminManagementView "1" *-- "1" GoogleMapComponent : "משבץ"
+AlgorithmRunnerView "1" *-- "1" GoogleMapComponent : "משבץ"
+AlgorithmRunnerView "1" *-- "many" VehicleCardComponent : "מייצר דינמית"
+
+' ========================================================
+' הגדרת תלויות והזרקות שירותים (UI to Services Injection)
+' ========================================================
+
+LoginView ..> UserService : "uses"
+LoginView ..> AdminService : "uses"
+RegisterView ..> UserService : "uses"
+UserDetailsView ..> UserService : "uses"
+
+CreateOrderView ..> OrderService : "uses"
+CreateOrderView ..> WarehouseService : "uses"
+
+MyOrdersView ..> OrderService : "uses"
+
+AdminManagementView ..> WarehouseService : "uses"
+AdminManagementView ..> VehicleService : "uses"
+
+AlgorithmRunnerView ..> OrderService : "uses"
+AlgorithmRunnerView ..> VehicleService : "uses"
+AlgorithmRunnerView ..> WarehouseService : "uses"
+AlgorithmRunnerView ..> DistanceMatrixService : "uses"
+AlgorithmRunnerView ..> GeneticRoutingService : "uses"
+
+SavedRoutesView ..> RouteHistoryService : "uses"
+SavedRoutesView ..> VehicleService : "uses"
+SavedRoutesView ..> OrderService : "uses"
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml LoginSequenceDiagram
+
+actor "משתמש / אדמין" as User
+participant "מסך התחברות (UI)" as FE
+participant "שרת המערכת (Backend)" as BE
+database "מסד נתונים" as DB
+
+== שלב 1: הזנת פרטי גישה ==
+User -> FE: הזנת שם משתמש וסיסמה
+activate FE
+
+FE -> BE: בקשת אימות והתחברות (HTTP POST)
+activate BE
+
+== שלב 2: אימות מול מסד הנתונים ==
+BE -> DB: שליפת פרטי המשתמש לפי שם המשתמש
+activate DB
+DB --> BE: החזרת פרטי המשתמש והסיסמה המוצפנת
+deactivate DB
+
+BE -> BE: בדיקת התאמה בין הסיסמאות והגדרת תפקיד (User/Admin)
+
+== שלב 3: אישור כניסה וטעינת ממשק ==
+BE --> FE: החזרת טוקן גישה וסוג ההרשאה (JSON)
+deactivate BE
+
+FE -> FE: שמירת הסשן וטעינת לוח הבקרה המתאים
+FE --> User: פתיחת מסך הבית בהתאם להרשאות המשתמש
+deactivate FE
+
+@enduml

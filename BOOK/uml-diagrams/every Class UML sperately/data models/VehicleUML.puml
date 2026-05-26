@@ -1,0 +1,8 @@
+@startuml
+class Vehicle {
+    - String licensePlate
+    - int maxCapacity
+    + String getLicensePlate()
+    + int getMaxCapacity()
+}
+@endum

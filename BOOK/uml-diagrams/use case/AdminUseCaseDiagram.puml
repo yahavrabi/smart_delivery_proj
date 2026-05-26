@@ -1,0 +1,24 @@
+@startuml AdminUseCaseDiagram
+
+left to right direction
+
+actor "מנהל מערכת (Admin)" as Admin
+
+rectangle "מערכת ניתוב משלוחים" {
+    usecase "ניהול וצפייה בצי הרכבים" as UC_ManageVehicles
+    usecase "צפייה בפרטי המשתמשים" as UC_ViewUsers
+    usecase "הרצת אלגוריתם הניתוב" as UC_RunAlgo
+    usecase "התחברות למערכת (Login)" as UC_Login
+}
+    
+' אילוץ התחברות
+UC_ManageVehicles ..> UC_Login : <<include>>
+UC_ViewUsers ..> UC_Login : <<include>>
+UC_RunAlgo ..> UC_Login : <<include>>
+
+' קשרים לשחקן
+Admin --> UC_ManageVehicles
+Admin --> UC_ViewUsers
+Admin --> UC_RunAlgo
+
+@endum

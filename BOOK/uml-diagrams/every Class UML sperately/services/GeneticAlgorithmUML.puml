@@ -1,0 +1,14 @@
+@startuml
+class GeneticRoutingService {
+    - {static} int POPULATION_SIZE
+    - {static} int GENERATIONS
+    - {static} double MUTATION_RATE
+    + Map<String, List<Order>> calculateRoutes(List<Order> orders, List<Vehicle> vehicles, Warehouse depot, double[][] matrix)
+    - double calculateFitness(List<Order> sequence, List<Vehicle> vehicles, double[][] matrix)
+    - Map<String, List<Order>> decodeSolution(List<Order> sequence, List<Vehicle> vehicles)
+    - List<Order> crossover(List<Order> p1, List<Order> p2)
+    - void mutate(List<Order> individual)
+    - List<List<Order>> initializePopulation(List<Order> orders)
+    - List<Order> selectParent(List<List<Order>> population)
+}
+@endum

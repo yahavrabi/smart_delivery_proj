@@ -10,5 +10,4 @@ public class AppMain {
 		SpringApplication.run(AppMain.class, args);
 		System.out.println("===> App Running");
 	}
-	
 }

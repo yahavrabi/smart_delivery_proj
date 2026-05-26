@@ -1,0 +1,5 @@
+@startuml AdminRepositoryInterface
+interface AdminRepository <<Repository>>{
+    + findByUsername(String) : Optional<Admin>
+}
+@enduml

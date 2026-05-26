@@ -1,0 +1,9 @@
+@startuml
+class UserService {
+    - UserRepository userRepository
+    - OrderService orderService
+    + User authenticate(String username, String password)
+    + List<User> searchUsers(String query)
+    + void deleteUserAndData(String userId)
+}
+@endum

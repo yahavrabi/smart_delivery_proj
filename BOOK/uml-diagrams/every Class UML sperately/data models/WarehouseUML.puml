@@ -1,0 +1,10 @@
+@startuml
+class Warehouse {
+    - String id
+    - double lat
+    - double lng
+    + String getId()
+    + double getLat()
+    + double getLng()
+}
+@endum

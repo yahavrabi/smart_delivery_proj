@@ -1,0 +1,13 @@
+@startuml GuestUseCaseDiagram
+
+left to right direction
+
+actor "אורח (Guest)" as Guest
+
+rectangle "מערכת ניתוב משלוחים" {
+    usecase "הרשמה למערכת (Sign Up)" as UC_SignUp
+}
+
+Guest --> UC_SignUp
+
+@enduml

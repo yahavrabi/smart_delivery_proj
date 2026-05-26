@@ -1,0 +1,11 @@
+@startuml
+class MainLayout {
+    + MainLayout()
+    - void createHeader()
+    - Button createThemeToggle()
+}
+note top of MainLayout
+  יורש מ-AppLayout של Vaadin
+  מנהל את ה-User Bar וה-Dark Mode
+end note
+@endum

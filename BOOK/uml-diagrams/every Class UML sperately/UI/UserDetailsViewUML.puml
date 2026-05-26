@@ -1,0 +1,9 @@
+@startuml
+class UserDetailsView {
+    - UserService userService
+    - VerticalLayout listContainer
+    - TextField searchField
+    + UserDetailsView(UserService userService)
+    - void refreshUserList(String query)
+}
+@endum

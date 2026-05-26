@@ -1,0 +1,8 @@
+@startuml
+class VehicleService {
+    - VehicleRepository vehicleRepo
+    + List<Vehicle> getAllVehicles()
+    + void saveVehicle(Vehicle vehicle)
+    + void deleteVehicle(String licensePlate)
+}
+@enduml

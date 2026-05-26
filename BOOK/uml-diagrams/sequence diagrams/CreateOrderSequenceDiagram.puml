@@ -1,0 +1,35 @@
+@startuml CreateOrderSequenceDiagram
+
+actor "משתמש רגיל (User)" as User
+participant "מסך יצירת הזמנה (UI)" as FE
+participant "שרת המערכת (Backend)" as BE
+participant "שירות מפות (API)" as Maps
+database "מסד נתונים" as DB
+
+== שלב 1: הזנת פרטי המשלוח ==
+User -> FE: הזנת כתובת
+activate FE
+
+FE -> BE: בקשת יצירת הזמנה (HTTP POST)
+activate BE
+
+== שלב 2: אימות כתובת והכנת נתונים ==
+BE -> Maps: אימות הכתובת והמרתה לקואורדינטות 
+activate Maps
+Maps --> BE: החזרת מיקום גיאוגרפי מדויק
+deactivate Maps
+
+== שלב 3: שמירה במסד הנתונים ==
+BE -> DB: שמירת ההזמנה החדשה באוסף ההזמנות
+activate DB
+DB --> BE: אישור שמירה מוצלחת
+deactivate DB
+
+== שלב 4: אישור למשתמש ==
+BE --> FE: החזרת סטטוס הצלחה ופרטי הזמנה (JSON)
+deactivate BE
+
+FE --> User: הצגת הודעה: ההזמנה נוצרה בהצלחה
+deactivate FE
+
+@enduml

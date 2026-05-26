@@ -1,0 +1,22 @@
+@startuml MyOrdersViewClass
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 8
+skinparam shadowlighting false
+
+skinparam class {
+    BackgroundColor #E3F2FD
+    BorderColor #2196F3
+    FontName "Segoe UI"
+    HeaderFontStyle bold
+}
+
+class MyOrdersView {
+    - orderService : OrderService
+    - grid : Grid<Order>
+    --
+    + MyOrdersView(OrderService)
+    - updateGrid(String) : void
+    - createStatusBadge(Order) : Span
+}
+@endif

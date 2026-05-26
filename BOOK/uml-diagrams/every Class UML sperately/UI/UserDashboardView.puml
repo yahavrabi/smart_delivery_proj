@@ -1,0 +1,5 @@
+@startuml
+class UserDashboardView{
+    + UserDashboardView()
+}
+@enduml

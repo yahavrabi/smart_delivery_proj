@@ -1,0 +1,15 @@
+@startuml
+class AlgorithmRunnerView {
+    - OrderService orderService
+    - VehicleService vehicleService
+    - WarehouseService warehouseService
+    - DistanceMatrixService matrixService
+    - GeneticRoutingService geneticService
+    - GoogleMapComponent map
+    - VerticalLayout sidebarContent
+    + AlgorithmRunnerView(...)
+    - void executeAlgorithm()
+    - void drawResults(Map<String, List<Order>>, LatLng depotLoc)
+    - void createVehicleCard(String vehicleId, List<Order> orders, String color)
+}
+@endum

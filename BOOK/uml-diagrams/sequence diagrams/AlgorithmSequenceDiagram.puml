@@ -1,0 +1,41 @@
+@startuml AlgorithmSequenceDiagram
+
+actor "מנהל מערכת (Admin)" as Admin
+participant "ממשק ומפה (UI)" as FE
+participant "שרת המערכת (Backend)" as BE
+participant "אלגוריתם גנטי" as GA
+database "מסד נתונים" as DB
+
+== שלב 1: שליחת בקשה ושליפת נתונים ==
+Admin -> FE: לחיצה על "חשב מסלול אופטימלי"
+activate FE
+
+FE -> BE: בקשת חישוב (HTTP REST)
+activate BE
+
+BE -> DB: שליפת חבילות, רכבים ומחסנים
+activate DB
+DB --> BE: החזרת נתונים (JSON)
+deactivate DB
+
+== שלב 2: הרצת אלגוריתם הליבה ==
+BE -> GA: הפעלת מנוע האופטימיזציה
+activate GA
+note over GA: אכיפת אילוצי זמן, קיבולת ואיזון עומסים
+GA --> BE: החזרת המסלול האופטימלי שנבחר
+deactivate GA
+
+== שלב 3: שמירה והצגת התוצאות ==
+BE -> DB: שמירת המסלולים החדשים במערכת
+activate DB
+DB --> BE: אישור שמירה
+deactivate DB
+
+BE --> FE: החזרת הפתרון המעובד (JSON)
+deactivate BE
+
+FE -> FE: שרטוט קווי הנסיעה על המפה
+FE --> Admin: הצגת מסלולים חזותיים ולוחות זמנים
+deactivate FE
+
+@enduml

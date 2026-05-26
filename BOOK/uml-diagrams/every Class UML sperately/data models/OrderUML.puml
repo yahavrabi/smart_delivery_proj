@@ -1,0 +1,16 @@
+@startuml
+class Order {
+    - String id
+    - String shippingAddress
+    - String description
+    - double lat
+    - double lng
+    - String status
+    + String getId()
+    + String getShippingAddress()
+    + String getDescription()
+    + double getLat()
+    + double getLng()
+    + String getStatus()
+}
+@endum

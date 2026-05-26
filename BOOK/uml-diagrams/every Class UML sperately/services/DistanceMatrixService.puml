@@ -1,0 +1,7 @@
+@startuml
+class DistanceMatrixService {
+    - String apiKey
+    + double[][] buildDistanceMatrix(List<Order> orders, LatLng warehouseLoc)
+    - double[][] buildAirDistanceMatrix(List<Order> orders, LatLng warehouseLoc)
+}
+@endum

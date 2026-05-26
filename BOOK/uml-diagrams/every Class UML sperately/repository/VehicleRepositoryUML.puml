@@ -1,0 +1,6 @@
+@startuml
+interface VehicleRepository {
+    + List<Vehicle> findAll()
+    + void deleteByLicensePlate(String licensePlate)
+}
+@enduml

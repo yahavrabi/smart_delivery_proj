@@ -1,0 +1,19 @@
+@startuml MapsServicesClass
+skinparam classAttributeIconSize 0
+skinparam roundcorner 8
+skinparam shadowlighting false
+skinparam class {
+    BackgroundColor #E8F5E9
+    BorderColor #4CAF50
+    FontName "Segoe UI"
+    HeaderFontStyle bold
+}
+
+class MapsService {
+    + getLatLngFromAddress(String) : LatLng
+}
+
+class DistanceMatrixService {
+    + buildDistanceMatrix(List<Order>, LatLng) : double[][]
+}
+@enduml

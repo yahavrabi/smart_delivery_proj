@@ -1,0 +1,26 @@
+@startuml AdminManagementViewClass
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 8
+skinparam shadowlighting false
+
+skinparam class {
+    BackgroundColor #E3F2FD
+    BorderColor #2196F3
+    FontName "Segoe UI"
+    HeaderFontStyle bold
+}
+
+class AdminManagementView {
+    - warehouseService : WarehouseService
+    - vehicleService : VehicleService
+    - mapsService : MapsService
+    - map : GoogleMapComponent
+    - vehicleGrid : Grid<Vehicle>
+    --
+    + AdminManagementView(WarehouseService, VehicleService, MapsService, String)
+    - btnSaveWarehouse_Click() : void
+    - btnAddVehicle_Click() : void
+    - updateVehicleGrid() : void
+}
+@enduml

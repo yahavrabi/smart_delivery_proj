@@ -1,0 +1,26 @@
+@startuml CreateOrderViewClass
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 8
+skinparam shadowlighting false
+
+skinparam class {
+    BackgroundColor #E3F2FD
+    BorderColor #2196F3
+    FontName "Segoe UI"
+    HeaderFontStyle bold
+}
+
+class CreateOrderView {
+    - mapsService : MapsService
+    - orderService : OrderService
+    - map : GoogleMapComponent
+    - currentLat : double
+    - currentLng : double
+    - isLocationVerified : boolean
+    --
+    + CreateOrderView(MapsService, OrderService, String)
+    - btnCheckAddress_Click() : void
+    - btnSave_Click() : void
+}
+@endif

@@ -1,0 +1,12 @@
+@startuml
+class User {
+    - String id
+    - String username
+    - String password
+    - boolean isAdmin
+    + String getId()
+    + String getUsername()
+    + String getPassword()
+    + boolean isAdmin()
+}
+@endum

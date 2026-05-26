@@ -13,43 +13,47 @@ import com.vaadin.flow.router.Route;
 import yahavr.smart_delivery_proj.datamodels.User;
 import yahavr.smart_delivery_proj.services.UserService;
 
-@Route("/")
-public class UserView extends VerticalLayout
-{
+@Route("/register")
+public class RegisterView extends VerticalLayout {
     private UserService userService;
     private Button btnInsert;
     private TextField txUn;
     private TextField txPw;
-    public UserView(UserService userService)
-    {
+
+    public RegisterView(UserService userService) {
         this.userService = userService;
 
-        add(new H1("UserView"));
+        add(new H1("RegisterView"));
 
         HorizontalLayout layout = new HorizontalLayout(Alignment.BASELINE);
         layout.add(txUn = new TextField("username"));
         layout.add(txPw = new TextField("password"));
-        layout.add(btnInsert = new Button("Insert User to DB"));
+        layout.add(btnInsert = new Button("הירשם"));
         btnInsert.addClickListener(clickEvent -> insertUserToDB());
         add(layout);
     }
-    private void insertUserToDB()
-    {
-        //textField חילוץ הערכים מתוך 
+
+    private void insertUserToDB() {
+        // textField חילוץ הערכים מתוך
         String un = txUn.getValue();
         String pw = txPw.getValue();
 
-        //validation check
-        if(un == null || pw ==null || un.length() < 6){
-            Notification.show("user already exists!", 3000, Position.MIDDLE);
+        // validation check
+        if (un.isEmpty() || pw.isEmpty()) {
+            Notification.show("username or password are empty", 3000, Position.MIDDLE);
             return;
         }
-        try{
-            userService.insertUser(new User(un,pw));
-            Notification.show("user inserted!", 3000, Position.MIDDLE);
-            UI.getCurrent().navigate(UserDetailsView.class);
 
-        }catch(Exception exp){
+        if (un.length() < 3) {
+            Notification.show("user must have at least 3 chars", 3000, Position.MIDDLE);
+            return;
+        }
+        try {
+            userService.insertUser(new User(un, pw));
+            Notification.show("user inserted!", 3000, Position.MIDDLE);
+            UI.getCurrent().navigate(LoginView.class);
+
+        } catch (Exception exp) {
             exp.printStackTrace();
             // notify user by notification of this error
             Notification.show("User NOT Created! " + exp.getMessage(), 5000, Position.MIDDLE);

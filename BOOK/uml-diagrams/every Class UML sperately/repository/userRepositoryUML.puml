@@ -1,0 +1,5 @@
+@startuml
+interface UserRepository {
+    + List<User> findByUsernameContainingIgnoreCase(String username)
+}
+@endum

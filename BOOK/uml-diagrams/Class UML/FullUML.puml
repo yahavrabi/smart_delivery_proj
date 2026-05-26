@@ -1,0 +1,105 @@
+@startuml
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 80
+
+' --- שכבת ה-UI: דפים, תבניות ורכיבים ---
+
+package "Vaadin UI: דפים ותבניות (Views & Layouts)" {
+    class AppLayout
+    class VerticalLayout
+    
+    class MainLayout extends AppLayout
+    class LoginView extends VerticalLayout
+    class AdminDashboardView extends VerticalLayout
+    class UserDashboardView extends VerticalLayout
+    class UserDetailsView extends VerticalLayout
+    class AlgorithmRunnerView extends VerticalLayout
+}
+
+package "Vaadin UI: רכיבים מיוחדים (Components)" {
+    class GoogleMapComponent
+    class VehicleCardComponent
+    class ThemeToggleButton
+}
+
+
+' --- שכבת הלוגיקה העסקית והשירותים ---
+
+package "מנועי חישוב ושירותים (Services)" {
+    class UserService
+    class OrderService
+    class VehicleService
+    class WarehouseService
+    class DistanceMatrixService
+    class GeneticRoutingService
+}
+
+
+' --- שכבת הגישה לבסיס הנתונים ---
+
+package "ניהול בסיס הנתונים (Repositories)" {
+    interface UserRepository
+    interface OrderRepository
+    interface VehicleRepository
+    interface WarehouseRepository
+}
+
+
+' --- שכבת המידע והישויות ---
+
+package "הישויות במערכת (Data Models)" {
+    class User
+    class Order
+    class Vehicle
+    class Warehouse
+}
+
+
+' --- קשרים וחיבורים בתוך שכבת ה-UI ---
+
+MainLayout --> ThemeToggleButton : מכיל את
+
+AlgorithmRunnerView --> GoogleMapComponent : מציג את
+AlgorithmRunnerView --> VehicleCardComponent : מייצר את
+
+
+' --- קשרי המעבר מהמסכים אל השירותים (Services) ---
+
+LoginView --> UserService : משתמש ב-
+
+UserDetailsView --> UserService : משתמש ב-
+
+AlgorithmRunnerView --> OrderService : משתמש ב-
+AlgorithmRunnerView --> VehicleService : משתמש ב-
+AlgorithmRunnerView --> WarehouseService : משתמש ב-
+AlgorithmRunnerView --> DistanceMatrixService : משתמש ב-
+AlgorithmRunnerView --> GeneticRoutingService : משתמש ב-
+
+
+' --- קשרים בין השירותים לבין עצמם ---
+
+UserService --> OrderService : מנקה נתונים דרך
+GeneticRoutingService --> DistanceMatrixService : מקבל מרחקים מ-
+
+
+' --- קשרי השירותים אל בסיס הנתונים (Repositories) ---
+
+UserService --> UserRepository : פונה ל-
+OrderService --> OrderRepository : פונה ל-
+VehicleService --> VehicleRepository : פונה ל-
+WarehouseService --> WarehouseRepository : פונה ל-
+
+
+' --- קשרי בסיס הנתונים והאלגוריתם אל ישויות המידע ---
+
+UserRepository ..> User : מנהל ישויות
+OrderRepository ..> Order : מנהל ישויות
+VehicleRepository ..> Vehicle : מנהל ישויות
+WarehouseRepository ..> Warehouse : מנהל ישויות
+
+GeneticRoutingService ..> Order : מסדר את
+GeneticRoutingService ..> Vehicle : מחשב לפי קיבולת
+GeneticRoutingService ..> Warehouse : מגדיר כנקודת מוצא
+
+@enduml

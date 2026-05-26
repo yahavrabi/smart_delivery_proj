@@ -1,0 +1,6 @@
+@startuml
+class AdminDashboardView {
+    + AdminDashboardView()
+    - void buildDashboardSummary()
+}
+@enduml
