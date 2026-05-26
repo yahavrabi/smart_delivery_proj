@@ -86,6 +86,12 @@ public class CreateOrderView extends VerticalLayout {
                 return;
             }
 
+            if(txDescription.isEmpty()){
+                Notification.show("נא לציין את תכולת המשלוח", 3000, Notification.Position.MIDDLE)
+                        .addThemeVariants(NotificationVariant.LUMO_WARNING);
+                return;
+            }
+
             // שליפת ה-ID של המשתמש מה-Session (חשוב מאוד לשיוך ההזמנה!)
             String currentUserId = (String) VaadinSession.getCurrent().getAttribute("userId");
 
