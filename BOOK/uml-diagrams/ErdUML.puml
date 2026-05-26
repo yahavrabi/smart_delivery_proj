@@ -1,0 +1,66 @@
+@startuml
+skinparam linetype ortho
+
+' הגדרת הישויות
+entity "Warehouse" {
+  *id : string <<PK>>
+  --
+  name : string
+  fullAddress : string
+  lat : double
+  lng : double
+}
+
+entity "Vehicle" {
+  *id : string <<PK>>
+  --
+  licensePlate : string
+  maxCapacity : double
+  warehouseId : string
+}
+
+entity "Order" {
+  *id : string <<PK>>
+  --
+  description : string
+  shippingAddress : string
+  lat : double
+  lng : double
+  status : string
+  --
+  userId : string
+  routeId : string
+}
+
+entity "User" {
+  *id : string <<PK>>
+  --
+  username : string
+  password : string
+}
+
+entity "Admin" {
+  *id : string <<PK>>
+  --
+  username : string
+  password : string
+  permissionsLevel : string
+}
+
+entity "Route" {
+  *id : string <<PK>>
+  --
+  totalDistance : double
+  createdAt : date
+  vehicleId : string
+}
+
+' קשרים משולבים (לוגיקה + כיוון) ללא קווים כפולים
+Warehouse ||-right-o{ Vehicle 
+Vehicle ||-right-o{ Route 
+Route ||-down-o{ Order 
+
+User ||-right-o{ Order 
+User ||-down-o| Admin 
+
+@enduml

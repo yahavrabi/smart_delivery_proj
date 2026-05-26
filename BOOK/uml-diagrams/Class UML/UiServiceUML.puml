@@ -1,0 +1,67 @@
+@startuml
+skinparam rankdir TB
+skinparam nodesep 15
+skinparam ranksep 25
+skinparam packageStyle rectangle
+
+package "UI" {
+    class AdminManagementView
+    class AlgorithmRunnerView
+    class CreateOrderView
+    class LoginView
+    class RegisterView
+    class SavedRoutsView
+    class UserDetailsView
+}
+
+package "Service" {
+    class WarehouseService
+    class VehicleService
+    class OrderService
+    class GeneticRoutingService
+    class MapsService
+    class DistanceMatrixService
+    class RouteService
+    class AdminService
+    class UserService
+}
+
+package "components"{
+    class GoogleMapComponent
+}
+
+' הגדרת קשרי תלות (Dependency)
+AdminManagementView --> WarehouseService
+AdminManagementView --> VehicleService
+AdminManagementView --> MapsService
+
+AlgorithmRunnerView --> OrderService
+AlgorithmRunnerView --> VehicleService
+AlgorithmRunnerView --> WarehouseService
+AlgorithmRunnerView --> GeneticRoutingService
+AlgorithmRunnerView --> DistanceMatrixService
+AlgorithmRunnerView --> RouteService
+
+CreateOrderView --> mapsService
+CreateOrderView --> OrderService
+CreateOrderView --> GoogleMapComponent
+
+LoginView --> AdminService
+LoginView --> UserService
+
+RegisterView --> UserService
+
+SavedRoutsView --> RouteService
+SavedRoutsView --> VehicleService
+SavedRoutsView --> OrderService
+
+UserDetailsView --> UserService
+
+' אילוץ מבנה אנכי הדוק למניעת רוחב
+AdminManagementView -[hidden]down- AlgorithmRunnerView
+
+WarehouseService -[hidden]down- VehicleService
+VehicleService -[hidden]down- OrderService
+OrderService -[hidden]down- GeneticRoutingService
+
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class GoogleMapsComponent
+class div
+
+GoogleMapsComponent --|> div
+@enduml

@@ -4,14 +4,7 @@ skinparam backgroundColor #FFFFFF
 skinparam roundcorner 8
 skinparam shadowlighting false
 
-skinparam class {
-    BackgroundColor #E8F5E9
-    BorderColor #4CAF50
-    FontName "Segoe UI"
-    HeaderFontStyle bold
-}
-
-class AdminService <<Service>> {
+class AdminService {
     - adminRepo : AdminRepository
     --
     + authenticate(String, String) : boolean

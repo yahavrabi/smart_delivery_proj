@@ -9,18 +9,18 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import yahavr.smart_delivery_proj.services.OrderService;
-import yahavr.smart_delivery_proj.services.RouteHistoryService;
+import yahavr.smart_delivery_proj.services.RouteService;
 import yahavr.smart_delivery_proj.services.VehicleService;
 
 @com.vaadin.flow.router.Route(value = "saved-routes", layout = MainLayout.class)
 public class SavedRoutesView extends VerticalLayout {
 
-    private final RouteHistoryService historyService;
+    private final RouteService historyService;
     private final VehicleService vehicleService; // וודא שזה מוגדר כאן
     private final OrderService orderService; // וודא שזה מוגדר כאן
     private Grid<yahavr.smart_delivery_proj.datamodels.Route> grid;
 
-    public SavedRoutesView(RouteHistoryService historyService, VehicleService vehicleService,
+    public SavedRoutesView(RouteService historyService, VehicleService vehicleService,
             OrderService orderService) {
         this.historyService = historyService;
         this.orderService = orderService;

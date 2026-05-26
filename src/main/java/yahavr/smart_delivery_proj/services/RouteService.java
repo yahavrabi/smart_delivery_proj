@@ -3,7 +3,6 @@ package yahavr.smart_delivery_proj.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import yahavr.smart_delivery_proj.datamodels.Order;
@@ -11,8 +10,7 @@ import yahavr.smart_delivery_proj.datamodels.Route;
 import yahavr.smart_delivery_proj.repositories.RouteRepository;
 
 @Service
-public class RouteHistoryService {
-    @Autowired
+public class RouteService {
     private final RouteRepository routeRepository;
 
     public void saveRouteSnapshot(String vehicleId, String warehouseId, List<Order> orders, double dist, long time) {
@@ -32,8 +30,7 @@ public class RouteHistoryService {
     }
 
     
-    @Autowired
-    public RouteHistoryService(RouteRepository routeRepository) {
+    public RouteService(RouteRepository routeRepository) {
         this.routeRepository = routeRepository;
     }
 

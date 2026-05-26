@@ -27,7 +27,7 @@ public class AlgorithmRunnerView extends VerticalLayout {
     private final WarehouseService warehouseService;
     private final DistanceMatrixService matrixService;
     private final GeneticRoutingService geneticService;
-    private final RouteHistoryService routeHistoryService;
+    private final RouteService routeHistoryService;
     
     private GoogleMapComponent map;
     private VerticalLayout sidebarContent;
@@ -39,7 +39,7 @@ public class AlgorithmRunnerView extends VerticalLayout {
 
     public AlgorithmRunnerView(OrderService orderService, VehicleService vehicleService,
                                WarehouseService warehouseService, DistanceMatrixService matrixService,
-                               GeneticRoutingService geneticService, RouteHistoryService routeHistoryService,
+                               GeneticRoutingService geneticService, RouteService routeHistoryService,
                                @Value("${google.maps.api.key}") String apiKey) {
         this.orderService = orderService;
         this.vehicleService = vehicleService;

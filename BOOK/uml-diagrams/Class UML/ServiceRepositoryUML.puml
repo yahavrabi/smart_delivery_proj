@@ -1,0 +1,54 @@
+@startuml
+skinparam rankdir TB
+skinparam nodesep 20
+skinparam ranksep 20
+skinparam packageStyle rectangle
+
+package "שכבת הלוגיקה והנתונים (Services & Repositories)" {
+    
+    ' טור 1
+    class UserService
+    interface UserRepository
+    UserService --> UserRepository
+    UserService --> OrderService
+    
+    class OrderService
+    interface OrderRepository
+    OrderService --> OrderRepository
+    
+    ' טור 2
+    class VehicleService
+    interface VehicleRepository
+    VehicleService --> VehicleRepository
+    
+    class WarehouseService
+    interface WarehouseRepository
+    WarehouseService --> WarehouseRepository
+    
+    ' טור 3
+    class RouteService
+    interface RouteRepository
+    RouteService --> RouteRepository
+    
+    class AdminService
+    interface AdminRepository
+    AdminService --> AdminRepository
+
+    ' אילוץ מבנה אנכי הדוק (טורים)
+    UserService -[hidden]right- VehicleService
+    VehicleService -[hidden]right- RouteService
+    
+    UserRepository -[hidden]right- VehicleRepository
+    VehicleRepository -[hidden]right- RouteRepository
+    
+    OrderService -[hidden]down- UserService
+    OrderRepository -[hidden]down- UserRepository
+    
+    WarehouseService -[hidden]down- VehicleService
+    WarehouseRepository -[hidden]down- VehicleRepository
+    
+    AdminService -[hidden]down- RouteService
+    AdminRepository -[hidden]down- RouteRepository
+}
+
+@enduml
