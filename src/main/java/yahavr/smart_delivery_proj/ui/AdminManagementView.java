@@ -19,7 +19,7 @@ import yahavr.smart_delivery_proj.datamodels.Warehouse;
 import yahavr.smart_delivery_proj.services.MapsService;
 import yahavr.smart_delivery_proj.services.VehicleService;
 import yahavr.smart_delivery_proj.services.WarehouseService;
-import yahavr.smart_delivery_proj.components.GoogleMapComponent;
+
 
 @Route(value = "admin-management", layout = MainLayout.class)
 public class AdminManagementView extends VerticalLayout {
@@ -28,7 +28,7 @@ public class AdminManagementView extends VerticalLayout {
     private final VehicleService vehicleService;
     private final MapsService mapsService;
 
-    private GoogleMapComponent map;
+    private GoogleMapView map;
     private Grid<Vehicle> vehicleGrid = new Grid<>(Vehicle.class);
 
     public AdminManagementView(WarehouseService warehouseService,
@@ -51,7 +51,7 @@ public class AdminManagementView extends VerticalLayout {
         TextField txWarehouseAddress = new TextField("כתובת מלאה");
         txWarehouseAddress.setWidth("350px");
 
-        map = new GoogleMapComponent(apiKey);
+        map = new GoogleMapView(apiKey);
 
         Button btnPreview = new Button("בדיקת מיקום במפה", e -> {
             String address = txWarehouseAddress.getValue();

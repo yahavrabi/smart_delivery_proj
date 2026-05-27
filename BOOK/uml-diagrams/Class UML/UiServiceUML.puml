@@ -1,67 +1,78 @@
 @startuml
-skinparam rankdir TB
-skinparam nodesep 15
-skinparam ranksep 25
-skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam ranksep 1
+skinparam nodesep 30
+hide members
 
 package "UI" {
-    class AdminManagementView
-    class AlgorithmRunnerView
-    class CreateOrderView
-    class LoginView
-    class RegisterView
-    class SavedRoutsView
-    class UserDetailsView
+ class AdminManagementView
+ class AlgorithmRunnerView
+ class CreateOrderView
+ class LoginView
+ class RegisterView
+ class SavedRoutsView
+ class UserDetailsView
+ class GoogleMapView
+
+    ' אילוץ מבנה אנכי מדויק בתוך החבילה
+    AdminManagementView -[hidden]down- AlgorithmRunnerView
+    AlgorithmRunnerView -[hidden]down- CreateOrderView
+    CreateOrderView -[hidden]down- LoginView
+    LoginView -[hidden]down- RegisterView
+    RegisterView -[hidden]down- SavedRoutsView
+    SavedRoutsView -[hidden]down- UserDetailsView
+    UserDetailsView -[hidden]down- GoogleMapView
 }
 
 package "Service" {
-    class WarehouseService
-    class VehicleService
-    class OrderService
-    class GeneticRoutingService
-    class MapsService
-    class DistanceMatrixService
-    class RouteService
-    class AdminService
-    class UserService
+ class WarehouseService
+ class VehicleService
+ class OrderService
+ class GeneticRoutingService
+ class MapsService
+ class DistanceMatrixService
+ class RouteService
+ class AdminService
+ class UserService
+
+    ' אילוץ מבנה אנכי מדויק בתוך החבילה
+    WarehouseService -[hidden]down- VehicleService
+    VehicleService -[hidden]down- OrderService
+    OrderService -[hidden]down- GeneticRoutingService
+    GeneticRoutingService -[hidden]down- MapsService
+    MapsService -[hidden]down- DistanceMatrixService
+    DistanceMatrixService -[hidden]down- RouteService
+    RouteService -[hidden]down- AdminService
+    AdminService -[hidden]down- UserService
 }
 
-package "components"{
-    class GoogleMapComponent
-}
+' הגדרת קשרי תלות (Dependency) מקצה לקצה עם כיוון ברור ימינה
+AdminManagementView -up-* WarehouseService
+AdminManagementView -up-* VehicleService
+AdminManagementView -up-* MapsService
 
-' הגדרת קשרי תלות (Dependency)
-AdminManagementView --> WarehouseService
-AdminManagementView --> VehicleService
-AdminManagementView --> MapsService
+AlgorithmRunnerView -up-* OrderService
+AlgorithmRunnerView -up-* VehicleService
+AlgorithmRunnerView -up-* WarehouseService
+AlgorithmRunnerView -up-* GeneticRoutingService
+AlgorithmRunnerView -up-* DistanceMatrixService
+AlgorithmRunnerView -up-* RouteService
 
-AlgorithmRunnerView --> OrderService
-AlgorithmRunnerView --> VehicleService
-AlgorithmRunnerView --> WarehouseService
-AlgorithmRunnerView --> GeneticRoutingService
-AlgorithmRunnerView --> DistanceMatrixService
-AlgorithmRunnerView --> RouteService
+CreateOrderView -up-* MapsService
+CreateOrderView -up-* OrderService
+' קשר בתוך חבילת ה-UI ולכן לא מכריחים אותו ימינה
+CreateOrderView --* GoogleMapView 
 
-CreateOrderView --> mapsService
-CreateOrderView --> OrderService
-CreateOrderView --> GoogleMapComponent
+LoginView -up-* AdminService
+LoginView -up-* UserService
 
-LoginView --> AdminService
-LoginView --> UserService
+RegisterView -up-* UserService
 
-RegisterView --> UserService
+SavedRoutsView -up-* RouteService
+SavedRoutsView -up-* VehicleService
+SavedRoutsView -up-* OrderService
 
-SavedRoutsView --> RouteService
-SavedRoutsView --> VehicleService
-SavedRoutsView --> OrderService
+UserDetailsView -up-* UserService
 
-UserDetailsView --> UserService
-
-' אילוץ מבנה אנכי הדוק למניעת רוחב
-AdminManagementView -[hidden]down- AlgorithmRunnerView
-
-WarehouseService -[hidden]down- VehicleService
-VehicleService -[hidden]down- OrderService
-OrderService -[hidden]down- GeneticRoutingService
-
+UI -[hidden]- Service
 @enduml

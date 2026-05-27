@@ -1,13 +1,13 @@
-package yahavr.smart_delivery_proj.components;
+package yahavr.smart_delivery_proj.ui;
 
 import com.google.maps.model.LatLng;
 import com.vaadin.flow.component.html.Div;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GoogleMapComponent extends Div {
+public class GoogleMapView extends Div {
 
-    public GoogleMapComponent(String apiKey) {
+    public GoogleMapView(String apiKey) {
         setId("map");
         setWidthFull();
         setHeight("500px");

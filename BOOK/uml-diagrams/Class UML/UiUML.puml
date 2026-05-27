@@ -6,38 +6,36 @@ skinparam packageStyle rectangle
 
 package "שכבת הממשק (UI Layer)" {
     class VerticalLayout <<Layout>> #LightBlue
+    class AppLayout <<Layout>> #LightBlue
 
     ' הגדרת העמודות הנסתרות כדי למנוע רוחב
-    class LoginView
-    class AdminDashboardView
-    class UserDashboardView
-    class AlgorithmRunnerView
-    class CreateOrderView
-    class HomeView
-    class SavedRoutsView
-    class RegisterView
-    class UserDetailsView
-    class MyOrdersView
-    class AdminManagmentView
-
-    ' ירושה מה-Layout (זה מה שגורם להם להופיע מתחתיו)
-    LoginView -up-|> VerticalLayout
-    AdminDashboardView -up-|> VerticalLayout
-    UserDashboardView -up-|> VerticalLayout
-    AlgorithmRunnerView -up-|> VerticalLayout
-    CreateOrderView -up-|> VerticalLayout
-    HomeView -up-|> VerticalLayout
-    SavedRoutsView -up-|> VerticalLayout
-    RegisterView -up-|> VerticalLayout
-    UserDetailsView -up-|> VerticalLayout
-    MyOrdersView -up-|> VerticalLayout
-    AdminManagmentView -up-|> VerticalLayout
-
-    package "(Components)" {
-        class GoogleMapComponent
+    package "UI"{
+        class LoginView
+        class AdminDashboardView
+        class UserDashboardView
+        class AlgorithmRunnerView
+        class CreateOrderView
+        class HomeView
+        class SavedRoutsView
+        class RegisterView
+        class UserDetailsView
+        class MyOrdersView
+        class AdminManagmentView
+        class GoogleMapView
     }
 
-    AlgorithmRunnerView --> GoogleMapComponent
+    'layouts
+    package "Navbars" {
+        class MainLayout
+        class GuestLayout
+    }
+
+    ' ירושה מה-Layout (זה מה שגורם להם להופיע מתחתיו)
+    UI -up-|> VerticalLayout
+    Navbars -right-|> AppLayout
+
+
+    AlgorithmRunnerView --> GoogleMapView
 
     ' יצירת מבנה של עמודות בעזרת קשרים שקופים
     LoginView -[hidden]down- CreateOrderView

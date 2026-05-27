@@ -14,8 +14,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.beans.factory.annotation.Value;
 import yahavr.smart_delivery_proj.datamodels.*;
 import yahavr.smart_delivery_proj.services.*;
-import yahavr.smart_delivery_proj.components.GoogleMapComponent;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,7 @@ public class AlgorithmRunnerView extends VerticalLayout {
     private final GeneticRoutingService geneticService;
     private final RouteService routeHistoryService;
     
-    private GoogleMapComponent map;
+    private GoogleMapView map;
     private VerticalLayout sidebarContent;
     private Button btnSave;
     
@@ -72,7 +70,7 @@ public class AlgorithmRunnerView extends VerticalLayout {
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setSizeFull();
         
-        map = new GoogleMapComponent(apiKey);
+        map = new GoogleMapView(apiKey);
         map.getStyle().set("flex-grow", "1");
 
         sidebarContent = new VerticalLayout();

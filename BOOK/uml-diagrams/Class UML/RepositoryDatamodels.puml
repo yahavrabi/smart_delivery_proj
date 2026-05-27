@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide members
+
+package "Repositories" {
+    interface AdminRepository
+    interface OrderRepository
+    interface RouteRepository
+    interface UserRepository
+    interface VehicleRepository
+    interface WarehouseRepository
+
+    ' אילוץ מבנה אנכי בתוך חבילת ה-Repositories
+    AdminRepository -[hidden]down- OrderRepository
+    OrderRepository -[hidden]down- RouteRepository
+    RouteRepository -[hidden]down- UserRepository
+    UserRepository -[hidden]down- VehicleRepository
+    VehicleRepository -[hidden]down- WarehouseRepository
+}
+
+package "Datamodels" {
+    class Admin
+    class Order
+    class Route
+    class User
+    class Vehicle
+    class Warehouse
+
+    ' אילוץ מבנה אנכי בתוך חבילת ה-Datamodels
+    Admin -[hidden]down- Order
+    Order -[hidden]down- Route
+    Route -[hidden]down- User
+    User -[hidden]down- Vehicle
+    Vehicle -[hidden]down- Warehouse
+}
+
+' יישור שתי החבילות לאותו הגובה
+AdminRepository -[hidden]right- Admin
+
+' קשרי תלות המכוונים ימינה כדי לשמור על החבילות זו לצד זו
+AdminRepository -right-> Admin
+OrderRepository -right-> Order
+RouteRepository -right-> Route
+UserRepository -right-> User
+VehicleRepository -right-> Vehicle
+WarehouseRepository -right-> Warehouse
+
+@enduml

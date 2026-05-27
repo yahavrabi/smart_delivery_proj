@@ -17,14 +17,13 @@ import org.springframework.beans.factory.annotation.Value;
 import yahavr.smart_delivery_proj.datamodels.Order;
 import yahavr.smart_delivery_proj.services.MapsService;
 import yahavr.smart_delivery_proj.services.OrderService;
-import yahavr.smart_delivery_proj.components.GoogleMapComponent;
 
 @Route(value = "create-order", layout = MainLayout.class)
 public class CreateOrderView extends VerticalLayout {
 
     private final MapsService mapsService;
     private final OrderService orderService;
-    private GoogleMapComponent map;
+    private GoogleMapView map;
 
     // משתני עזר לשמירת המיקום שנמצא ב-Geocoding
     private double currentLat;
@@ -52,7 +51,7 @@ public class CreateOrderView extends VerticalLayout {
         txAddress.setWidth("400px");
 
         // רכיב המפה שבנינו
-        map = new GoogleMapComponent(apiKey);
+        map = new GoogleMapView(apiKey);
 
         // כפתור לבדיקת הכתובת במפה (Geocoding)
         Button btnCheckAddress = new Button("בדוק מיקום במפה", e -> {
