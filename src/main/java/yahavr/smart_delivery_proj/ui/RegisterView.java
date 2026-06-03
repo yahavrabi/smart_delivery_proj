@@ -40,23 +40,23 @@ public class RegisterView extends VerticalLayout {
 
         // validation check
         if (un.isEmpty() || pw.isEmpty()) {
-            Notification.show("username or password are empty", 3000, Position.MIDDLE);
+            Notification.show("שם המשתמש או הסיסמא שגויים", 3000, Position.MIDDLE);
             return;
         }
 
         if (un.length() < 3) {
-            Notification.show("user must have at least 3 chars", 3000, Position.MIDDLE);
+            Notification.show("שם המשתמש חייב להיות לפחות 3 תווים", 3000, Position.MIDDLE);
             return;
         }
         try {
-            userService.insertUser(new User(un, pw));
-            Notification.show("user inserted!", 3000, Position.MIDDLE);
+            User user = new User(un,pw);
+            userService.insertUser(user);
+            Notification.show("המשתמש נוצר בהצלחה!", 3000, Position.MIDDLE);
             UI.getCurrent().navigate(LoginView.class);
 
         } catch (Exception exp) {
-            exp.printStackTrace();
             // notify user by notification of this error
-            Notification.show("User NOT Created! " + exp.getMessage(), 5000, Position.MIDDLE);
+            Notification.show("שגיאה! " + exp.getMessage(), 5000, Position.MIDDLE);
         }
     }
 }

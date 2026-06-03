@@ -66,20 +66,32 @@ public class DistanceMatrixService {
     }
 
     private double[][] buildAirDistanceMatrix(List<Order> orders, LatLng warehouseLoc) {
-        // המימוש הקודם שלך (האווירי) כגיבוי
         int size = orders.size() + 1;
         double[][] matrix = new double[size][size];
-        // ... לוגיקת פיתגורס ...
+
+        // 1. יצירת מערך עזר שכולל את כל הנקודות (המחסן באינדקס 0)
+        LatLng[] allLocations = new LatLng[size];
+        allLocations[0] = warehouseLoc;
+        for (int i = 0; i < orders.size(); i++) {
+            allLocations[i + 1] = new LatLng(orders.get(i).getLat(), orders.get(i).getLng());
+        }
+
+        // 2. לולאה כפולה לחישוב המרחק לפי פיתגורס רגיל
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j) {
+                    matrix[i][j] = 0.0; // מרחק מנקודה לעצמה הוא תמיד 0
+                } else {
+                    // הפרשים בין הקואורדינטות
+                    double dLat = allLocations[i].lat - allLocations[j].lat;
+                    double dLng = allLocations[i].lng - allLocations[j].lng;
+                    
+                    // חישוב המרחק האוקלידי (שורש של סכום הריבועים)
+                    matrix[i][j] = Math.sqrt((dLat * dLat) + (dLng * dLng));
+                }
+            }
+        }
+
         return matrix;
-    }
-
-    public double getDistance(int prev, int curr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDistance'");
-    }
-
-    public double getDuration(int prev, int curr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDuration'");
     }
 }

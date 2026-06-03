@@ -2,8 +2,10 @@ package yahavr.smart_delivery_proj.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import yahavr.smart_delivery_proj.datamodels.User;
 import yahavr.smart_delivery_proj.repositories.UserRepository;
+
 import java.util.List;
 
 @Service
@@ -16,6 +18,7 @@ public class UserService {
     // הרשמה
     public void insertUser(User user) throws Exception {
         if (userRepo.existsByUsernameIgnoreCase(user.getUsername())) {
+            //user.setPassword(PasswordHelper.encode(user.getPassword()));
             throw new Exception("שם המשתמש כבר קיים במערכת");
         }
         userRepo.insert(user);

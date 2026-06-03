@@ -29,6 +29,8 @@ public class MainLayout extends AppLayout {
         Span userLabel = new Span(VaadinIcon.USER.create(), new Span(username));
         userLabel.getStyle().set("font-weight", "bold");
 
+        
+
         // --- כפתור Dark Mode ---
         Button themeToggle = createThemeToggle();
 

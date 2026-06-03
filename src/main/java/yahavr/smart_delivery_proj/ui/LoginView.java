@@ -37,8 +37,7 @@ public class LoginView extends VerticalLayout {
             try {
                 login();
             } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                Notification.show("שם המשתמש או הסיסמא שגויים");
             }
         });
         btnLogin.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
